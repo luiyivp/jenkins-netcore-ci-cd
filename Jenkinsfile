@@ -1,7 +1,7 @@
 pipeline {
     agent none
     stages {
-        stage('Package project') {
+        stage('') {
             agent {
                 docker {
                     image 'mcr.microsoft.com/dotnet/core/sdk:3.1'
@@ -22,6 +22,11 @@ pipeline {
                 stage('Build project') {
                     steps {
                         sh 'dotnet build src/netcore-api/netcore-api.csproj'
+                    }
+                }
+                stage('Package project') {
+                    steps {
+                        sh 'dotnet pack src/netcore-api/netcore-api.csproj'
                     }
                 }
             }

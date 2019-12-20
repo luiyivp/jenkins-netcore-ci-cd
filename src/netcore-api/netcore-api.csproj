@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <RootNamespace>netcore_api</RootNamespace>
+    <IsPackable>true</IsPackable>
   </PropertyGroup>
 
 
