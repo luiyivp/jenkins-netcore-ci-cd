@@ -4,7 +4,6 @@ services:
     image: jenkinsci/blueocean
     container_name: jenkins
     environment:
-      - DOCKER_HOST=tcp://localhost:2375
       - JENKINS_UC=http://updates.jenkins.io
       - JENKINS_UC_EXPERIMENTAL=http://updates.jenkins.io/experimental
       - JENKINS_INCREMENTALS_REPO_MIRROR=http://repo.jenkins-ci.org/incrementals
@@ -18,6 +17,7 @@ services:
     volumes:
       - jenkins-data:/var/jenkins_home
       - jenkins-home:/home
+      - /var/run/docker.sock:/var/run/docker.sock
   nexus:
     image: sonatype/nexus3
     container_name: nexus
