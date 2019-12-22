@@ -1,7 +1,7 @@
 pipeline {
     agent none
     stages {
-        stage('') {
+        stage('Release project processes') {
             agent {
                 docker {
                     image 'mcr.microsoft.com/dotnet/core/sdk:3.1'
@@ -43,6 +43,26 @@ pipeline {
                 timeout(time: 1, unit: 'MINUTES') {
                     waitForQualityGate abortPipeline: true
                 }
+            }
+        }
+        stage('Publish artifact') {
+            agent any
+            steps {
+                nexusArtifactUploader(
+                    nexusVersion: 'nexus3',
+                    protocol: 'http',
+                    nexusUrl: 'nexus:8081',
+                    groupId: 'api',
+                    version: '1.0',
+                    repository: 'dotnet-releases',
+                    credentialsId: 'nexus',
+                    artifacts: [
+                        [artifactId: 'netcoreAPI',
+                        classifier: '',
+                        file: 'src/netcore-api/bin/Debug/netcore-api.1.0.0.nupkg',
+                        type: 'nupkg']
+                    ]
+                )
             }
         }
     }
